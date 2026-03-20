@@ -1,0 +1,82 @@
+project_name: morphex
+version: 2
+
+before:
+  hooks:
+    - go mod tidy -C core
+    - go mod tidy -C engine
+
+builds:
+  - id: morphex
+    main: ./cmd/morphex/
+    dir: core
+    binary: morphex
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - darwin
+      - windows
+    goarch:
+      - amd64
+      - arm64
+    ldflags:
+      - -s -w -X main.version={{.Version}}
+
+archives:
+  - id: morphex
+    builds: [morphex]
+    format: tar.gz
+    format_overrides:
+      - goos: windows
+        format: zip
+    name_template: "morphex_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+
+checksum:
+  name_template: 'checksums.txt'
+
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - '^docs:'
+      - '^test:'
+      - '^ci:'
+
+brews:
+  - name: morphex
+    repository:
+      owner: morphex-security
+      name: homebrew-tap
+    directory: Formula
+    homepage: https://morphex.sh
+    description: "Secret scanner that understands code. F1=1.00 detection accuracy."
+    license: AGPL-3.0
+    install: |
+      bin.install "morphex"
+    test: |
+      system "#{bin}/morphex", "version"
+
+dockers:
+  - image_templates:
+      - "morphexsecurity/morphex:{{ .Version }}-amd64"
+    use: buildx
+    build_flag_templates:
+      - "--platform=linux/amd64"
+    goarch: amd64
+  - image_templates:
+      - "morphexsecurity/morphex:{{ .Version }}-arm64"
+    use: buildx
+    build_flag_templates:
+      - "--platform=linux/arm64"
+    goarch: arm64
+
+docker_manifests:
+  - name_template: "morphexsecurity/morphex:{{ .Version }}"
+    image_templates:
+      - "morphexsecurity/morphex:{{ .Version }}-amd64"
+      - "morphexsecurity/morphex:{{ .Version }}-arm64"
+  - name_template: "morphexsecurity/morphex:latest"
+    image_templates:
+      - "morphexsecurity/morphex:{{ .Version }}-amd64"
+      - "morphexsecurity/morphex:{{ .Version }}-arm64"

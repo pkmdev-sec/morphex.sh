@@ -1,0 +1,49 @@
+# Binaries
+/morphex
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Build / cache
+.next/
+node_modules/
+dist/
+build/
+*.o
+*.a
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Data
+.morphex-data/
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Go vendor (use go modules)
+vendor/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# ML models (large binary)
+ml/models/model.onnx
+
+# Next.js
+morphex-ui/.next/
+morphex

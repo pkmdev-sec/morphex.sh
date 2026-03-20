@@ -1,0 +1,59 @@
+{
+  "min_confidence": 0.8,
+  "max_file_size": 500000,
+  "include_patterns": [
+    "*.py",
+    "*.go",
+    "*.js",
+    "*.ts",
+    "*.java",
+    "*.rb",
+    "*.env",
+    "*.yaml",
+    "*.yml",
+    "*.json",
+    "*.tf",
+    "*.tfvars",
+    "Dockerfile",
+    "docker-compose.*"
+  ],
+  "exclude_patterns": [
+    "*.test.*",
+    "*_test.go",
+    "*_test.py",
+    "*.spec.*",
+    "*.example",
+    "*.sample",
+    "*.template",
+    "*.md",
+    "*.txt",
+    "*.rst"
+  ],
+  "severity_map": {
+    "AUTH_CREDENTIAL": "critical",
+    "UNCERTAIN": "high"
+  },
+  "ignore_provenance": [
+    "DOC_EXAMPLE",
+    "BUILD_GENERATED",
+    "DERIVED_VALUE",
+    "HUMAN_AUTHORED"
+  ],
+  "require_verification": false,
+  "block_on_findings": true,
+  "allow_list": [
+    {
+      "pattern": "AKIAIOSFODNN7EXAMPLE",
+      "reason": "AWS official example key from documentation"
+    },
+    {
+      "pattern": "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY",
+      "reason": "AWS official example secret from documentation"
+    },
+    {
+      "pattern": "sk_test_",
+      "reason": "Stripe test-mode keys are non-sensitive"
+    }
+  ],
+  "custom_prefixes": {}
+}

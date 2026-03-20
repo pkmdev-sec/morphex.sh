@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 400" width="100%" height="100%">
+  <defs>
+    <linearGradient id="logo-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" />
+      <stop offset="100%" stop-color="#999999" />
+    </linearGradient>
+    <filter id="logo-glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="5" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1280" height="400" fill="#000000" />
+
+  <!-- Dot Grid -->
+  <g opacity="0.12">
+    <pattern id="dots" x="0" y="0" width="24" height="24" patternUnits="userSpaceOnUse">
+      <circle cx="12" cy="12" r="0.7" fill="#555555" />
+    </pattern>
+    <rect width="1280" height="400" fill="url(#dots)" />
+  </g>
+
+  <!-- Sonar Rings — centered on banner midpoint -->
+  <circle cx="640" cy="200" r="100" fill="none" stroke="#00F0FF" stroke-width="0.5" opacity="0.07" />
+  <circle cx="640" cy="200" r="180" fill="none" stroke="#00F0FF" stroke-width="0.5" opacity="0.04" />
+  <circle cx="640" cy="200" r="280" fill="none" stroke="#00F0FF" stroke-width="0.5" opacity="0.025" />
+
+  <!-- Corner Brackets -->
+  <g stroke="#333333" stroke-width="2" fill="none" opacity="0.35">
+    <path d="M 30,30 L 30,58 M 30,30 L 58,30" />
+    <path d="M 1250,30 L 1250,58 M 1250,30 L 1222,30" />
+    <path d="M 30,370 L 30,342 M 30,370 L 58,370" />
+    <path d="M 1250,370 L 1250,342 M 1250,370 L 1222,370" />
+  </g>
+
+  <!--
+    Logo: 512x512 source, scaled to 72x72.
+    Scale factor: 72/512 = 0.140625
+    To center at (640, 130):
+      translate_x = 640 - (256 * 0.140625) = 640 - 36 = 604
+      translate_y = 130 - (256 * 0.140625) = 130 - 36 = 94
+  -->
+  <g transform="translate(604, 94) scale(0.140625)">
+    <rect x="64" y="64" width="384" height="384" fill="none" stroke="#333333" stroke-width="4" />
+    <g transform="translate(128, 156)">
+      <rect x="0" y="0" width="48" height="200" fill="url(#logo-grad)" />
+      <rect x="208" y="0" width="48" height="200" fill="url(#logo-grad)" />
+      <rect x="48" y="48" width="48" height="48" fill="#CCCCCC" />
+      <rect x="80" y="96" width="48" height="48" fill="#AAAAAA" />
+      <rect x="160" y="48" width="48" height="48" fill="#CCCCCC" />
+      <rect x="128" y="96" width="48" height="48" fill="#AAAAAA" />
+      <rect x="104" y="144" width="48" height="48" fill="#FFFFFF" filter="url(#logo-glow)" />
+      <rect x="116" y="156" width="24" height="24" fill="#000000" />
+    </g>
+    <rect x="56" y="56" width="16" height="16" fill="#666666" />
+    <rect x="440" y="56" width="16" height="16" fill="#666666" />
+    <rect x="56" y="440" width="16" height="16" fill="#666666" />
+    <rect x="440" y="440" width="16" height="16" fill="#666666" />
+  </g>
+
+  <!-- Wordmark — centered, below logo -->
+  <text x="640" y="210" text-anchor="middle" font-family="'Courier New', monospace" font-size="44" font-weight="bold" fill="#FFFFFF" letter-spacing="14">MORPHEX</text>
+
+  <!-- Tagline -->
+  <text x="640" y="248" text-anchor="middle" font-family="'Courier New', monospace" font-size="12" fill="#666666" letter-spacing="5">SECRET SCANNER THAT UNDERSTANDS YOUR CODE</text>
+
+  <!-- Thin separator -->
+  <line x1="560" y1="272" x2="720" y2="272" stroke="#222222" stroke-width="1" />
+
+  <!-- Metadata line -->
+  <text x="640" y="298" text-anchor="middle" font-family="'Courier New', monospace" font-size="10" fill="#444444" letter-spacing="4">v1.0.0  ·  AGPL-3.0  ·  GO</text>
+
+  <!-- Bottom accent -->
+  <line x1="0" y1="399" x2="1280" y2="399" stroke="#00F0FF" stroke-width="1" opacity="0.25" />
+</svg>

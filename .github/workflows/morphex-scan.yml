@@ -1,0 +1,60 @@
+name: MORPHEX Scan (SARIF)
+
+on:
+  push:
+    branches: [main, master, develop]
+  pull_request:
+    branches: [main, master, develop]
+
+permissions:
+  actions: read
+  security-events: write
+  contents: read
+
+jobs:
+  secret-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: "1.22"
+
+      - name: Build MORPHEX
+        run: |
+          cd core && go build -o ../morphex ./cmd/morphex/
+
+      - name: Run MORPHEX scan (SARIF output)
+        env:
+        run: |
+          ./morphex scan \
+            --sarif \
+            --policy config/policies/strict-ci.json \
+            --threshold 0.8 \
+            --baseline .morphex-baseline.json \
+            . > results.sarif
+        continue-on-error: true
+
+      - name: Upload SARIF to GitHub Code Scanning
+        uses: github/codeql-action/upload-sarif@v4
+        if: always()
+        continue-on-error: true
+        with:
+          sarif_file: results.sarif
+          category: morphex-secret-scan
+
+      - name: Run MORPHEX scan (blocking check)
+        env:
+        run: |
+          ./morphex scan \
+            --json \
+            --policy config/policies/strict-ci.json \
+            --threshold 0.8 \
+            --baseline .morphex-baseline.json \
+            --fail \
+            .

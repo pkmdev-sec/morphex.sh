@@ -1,0 +1,36 @@
+{
+  "min_confidence": 0.5,
+  "max_file_size": 2000000,
+  "include_patterns": [],
+  "exclude_patterns": [
+    "vendor/*",
+    "node_modules/*",
+    "*.lock",
+    "go.sum"
+  ],
+  "severity_map": {
+    "AUTH_CREDENTIAL": "high",
+    "UNCERTAIN": "low"
+  },
+  "ignore_provenance": [
+    "BUILD_GENERATED",
+    "DERIVED_VALUE"
+  ],
+  "require_verification": false,
+  "block_on_findings": false,
+  "allow_list": [
+    {
+      "pattern": "AKIAIOSFODNN7EXAMPLE",
+      "reason": "AWS official example key"
+    },
+    {
+      "pattern": "changeme",
+      "reason": "Common placeholder password"
+    },
+    {
+      "pattern": "your_api_key",
+      "reason": "Template placeholder value"
+    }
+  ],
+  "custom_prefixes": {}
+}

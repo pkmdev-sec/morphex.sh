@@ -1,0 +1,112 @@
+name: 'Morphex Secret Scanner'
+description: 'Find real secrets in your code. Skips the noise — only flags what actually matters.'
+branding:
+  icon: 'shield'
+  color: 'blue'
+
+inputs:
+  path:
+    description: 'Path to scan (default: current directory)'
+    required: false
+    default: '.'
+  threshold:
+    description: 'Confidence threshold 0.0-1.0 (default: 0.7)'
+    required: false
+    default: '0.7'
+  deep:
+    description: 'Enable deep scanning for obfuscated secrets'
+    required: false
+    default: 'false'
+  sarif:
+    description: 'Upload SARIF results to GitHub Code Scanning'
+    required: false
+    default: 'false'
+  fail-on-findings:
+    description: 'Fail the workflow if secrets are found'
+    required: false
+    default: 'true'
+  baseline:
+    description: 'Path to baseline file for suppressing known findings'
+    required: false
+    default: ''
+  version:
+    description: 'Morphex version to install'
+    required: false
+    default: 'latest'
+
+outputs:
+  findings:
+    description: 'Number of secrets found'
+    value: ${{ steps.scan.outputs.findings }}
+  sarif-file:
+    description: 'Path to generated SARIF file (if sarif=true)'
+    value: ${{ steps.scan.outputs.sarif_file }}
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Install Morphex
+      shell: bash
+      run: |
+        VERSION="${{ inputs.version }}"
+        if [ "$VERSION" = "latest" ]; then
+          DOWNLOAD_URL=$(curl -s https://api.github.com/repos/morphex-security/morphex/releases/latest | grep "browser_download_url.*linux_amd64.tar.gz" | cut -d '"' -f 4)
+        else
+          DOWNLOAD_URL="https://github.com/morphex-security/morphex/releases/download/v${VERSION}/morphex_${VERSION}_linux_amd64.tar.gz"
+        fi
+        curl -sL "$DOWNLOAD_URL" | tar xz -C /usr/local/bin morphex
+        chmod +x /usr/local/bin/morphex
+        morphex version
+
+    - name: Run Morphex Scan
+      id: scan
+      shell: bash
+      run: |
+        ARGS="--json --threshold ${{ inputs.threshold }}"
+
+        if [ "${{ inputs.deep }}" = "true" ]; then
+          ARGS="$ARGS --deep"
+        fi
+
+        if [ "${{ inputs.fail-on-findings }}" = "true" ]; then
+          ARGS="$ARGS --fail"
+        fi
+
+        if [ -n "${{ inputs.baseline }}" ]; then
+          ARGS="$ARGS --baseline ${{ inputs.baseline }}"
+        fi
+
+        ARGS="$ARGS --force-skip-binaries"
+
+        # Run scan and capture output
+        set +e
+        OUTPUT=$(morphex scan $ARGS "${{ inputs.path }}" 2>&1)
+        EXIT_CODE=$?
+        set -e
+
+        # Extract findings count
+        FINDINGS=$(echo "$OUTPUT" | python3 -c "import json,sys; d=json.load(sys.stdin); print(d.get('total_findings', 0))" 2>/dev/null || echo "0")
+        echo "findings=$FINDINGS" >> $GITHUB_OUTPUT
+
+        # Print findings as GitHub Actions annotations
+        if [ "$FINDINGS" -gt 0 ]; then
+          morphex scan --github-actions --threshold ${{ inputs.threshold }} ${{ inputs.deep == 'true' && '--deep' || '' }} --force-skip-binaries "${{ inputs.path }}" 2>/dev/null || true
+        fi
+
+        echo "$OUTPUT"
+
+        # Handle SARIF
+        if [ "${{ inputs.sarif }}" = "true" ]; then
+          SARIF_FILE="${RUNNER_TEMP}/morphex-results.sarif"
+          morphex scan --sarif --threshold ${{ inputs.threshold }} ${{ inputs.deep == 'true' && '--deep' || '' }} --force-skip-binaries "${{ inputs.path }}" > "$SARIF_FILE" 2>/dev/null || true
+          echo "sarif_file=$SARIF_FILE" >> $GITHUB_OUTPUT
+        fi
+
+        exit $EXIT_CODE
+
+    - name: Upload SARIF (if enabled)
+      if: inputs.sarif == 'true' && always()
+      uses: github/codeql-action/upload-sarif@v3
+      with:
+        sarif_file: ${{ steps.scan.outputs.sarif_file }}
+        category: morphex

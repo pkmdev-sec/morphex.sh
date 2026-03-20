@@ -1,0 +1,15 @@
+- id: morphex
+  name: morphex
+  description: Catch secrets before they hit your repo. Fast — runs in under 30ms.
+  entry: morphex scan --fail --threshold 0.7
+  language: golang
+  types: [text]
+  require_serial: true
+
+- id: morphex-deep
+  name: morphex-deep
+  description: Same as morphex, but also catches concatenated, encoded, and reversed secrets.
+  entry: morphex scan --fail --deep --threshold 0.7
+  language: golang
+  types: [text]
+  require_serial: true

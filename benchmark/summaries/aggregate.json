@@ -1,0 +1,205 @@
+{
+  "aggregate": {
+    "aegis": {
+      "total_findings": 16759,
+      "avg_findings_per_repo": 250.1,
+      "max_findings_single_repo": 7000,
+      "total_duration_s": 1505.6,
+      "avg_duration_per_repo_s": 22.47,
+      "max_duration_single_repo_s": 180.59,
+      "avg_memory_kb": 594354,
+      "max_memory_kb": 8632496,
+      "timeouts": 3,
+      "errors": 3,
+      "repos_scanned": 67
+    },
+    "trufflehog": {
+      "total_findings": 5913,
+      "avg_findings_per_repo": 88.3,
+      "max_findings_single_repo": 1901,
+      "total_duration_s": 910.88,
+      "avg_duration_per_repo_s": 13.6,
+      "max_duration_single_repo_s": 98.03,
+      "avg_memory_kb": 379621,
+      "max_memory_kb": 906128,
+      "timeouts": 0,
+      "errors": 0,
+      "repos_scanned": 67
+    },
+    "gitleaks": {
+      "total_findings": 10062,
+      "avg_findings_per_repo": 150.2,
+      "max_findings_single_repo": 1784,
+      "total_duration_s": 1113.88,
+      "avg_duration_per_repo_s": 16.63,
+      "max_duration_single_repo_s": 180.5,
+      "avg_memory_kb": 88391,
+      "max_memory_kb": 498880,
+      "timeouts": 1,
+      "errors": 1,
+      "repos_scanned": 67
+    }
+  },
+  "by_category": {
+    "benchmark": {
+      "aegis": {
+        "repos": 2,
+        "total_findings": 6,
+        "avg_duration_s": 0.19
+      },
+      "trufflehog": {
+        "repos": 2,
+        "total_findings": 3,
+        "avg_duration_s": 1.14
+      },
+      "gitleaks": {
+        "repos": 2,
+        "total_findings": 3,
+        "avg_duration_s": 0.24
+      }
+    },
+    "crypto": {
+      "aegis": {
+        "repos": 8,
+        "total_findings": 1186,
+        "avg_duration_s": 24.03
+      },
+      "trufflehog": {
+        "repos": 8,
+        "total_findings": 41,
+        "avg_duration_s": 7.55
+      },
+      "gitleaks": {
+        "repos": 8,
+        "total_findings": 553,
+        "avg_duration_s": 12.18
+      }
+    },
+    "database": {
+      "aegis": {
+        "repos": 10,
+        "total_findings": 3707,
+        "avg_duration_s": 27.63
+      },
+      "trufflehog": {
+        "repos": 10,
+        "total_findings": 1440,
+        "avg_duration_s": 28.65
+      },
+      "gitleaks": {
+        "repos": 10,
+        "total_findings": 4488,
+        "avg_duration_s": 26.71
+      }
+    },
+    "infra": {
+      "aegis": {
+        "repos": 14,
+        "total_findings": 2210,
+        "avg_duration_s": 6.71
+      },
+      "trufflehog": {
+        "repos": 14,
+        "total_findings": 571,
+        "avg_duration_s": 7.36
+      },
+      "gitleaks": {
+        "repos": 14,
+        "total_findings": 793,
+        "avg_duration_s": 6.48
+      }
+    },
+    "monorepo": {
+      "aegis": {
+        "repos": 2,
+        "total_findings": 7828,
+        "avg_duration_s": 65.51
+      },
+      "trufflehog": {
+        "repos": 2,
+        "total_findings": 29,
+        "avg_duration_s": 11.27
+      },
+      "gitleaks": {
+        "repos": 2,
+        "total_findings": 729,
+        "avg_duration_s": 24.25
+      }
+    },
+    "polyglot": {
+      "aegis": {
+        "repos": 1,
+        "total_findings": 0,
+        "avg_duration_s": 180.59
+      },
+      "trufflehog": {
+        "repos": 1,
+        "total_findings": 550,
+        "avg_duration_s": 98.03
+      },
+      "gitleaks": {
+        "repos": 1,
+        "total_findings": 0,
+        "avg_duration_s": 180.5
+      }
+    },
+    "popular": {
+      "aegis": {
+        "repos": 16,
+        "total_findings": 1518,
+        "avg_duration_s": 38.21
+      },
+      "trufflehog": {
+        "repos": 16,
+        "total_findings": 1035,
+        "avg_duration_s": 19.82
+      },
+      "gitleaks": {
+        "repos": 16,
+        "total_findings": 2047,
+        "avg_duration_s": 26.32
+      }
+    },
+    "security": {
+      "aegis": {
+        "repos": 10,
+        "total_findings": 299,
+        "avg_duration_s": 1.66
+      },
+      "trufflehog": {
+        "repos": 10,
+        "total_findings": 2244,
+        "avg_duration_s": 1.55
+      },
+      "gitleaks": {
+        "repos": 10,
+        "total_findings": 1443,
+        "avg_duration_s": 0.65
+      }
+    },
+    "web": {
+      "aegis": {
+        "repos": 4,
+        "total_findings": 5,
+        "avg_duration_s": 0.78
+      },
+      "trufflehog": {
+        "repos": 4,
+        "total_findings": 0,
+        "avg_duration_s": 1.36
+      },
+      "gitleaks": {
+        "repos": 4,
+        "total_findings": 6,
+        "avg_duration_s": 0.35
+      }
+    }
+  },
+  "tool_versions": {
+    "aegis": "AEGIS v1.0.0",
+    "trufflehog": "trufflehog 3.93.8",
+    "gitleaks": "8.30.0"
+  },
+  "total_repos": 67,
+  "total_wall_time_s": 1781
+}

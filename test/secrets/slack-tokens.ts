@@ -1,0 +1,3 @@
+// Test: Slack Bot/User Tokens (should trigger AUTH_CREDENTIAL)
+export const SLACK_BOT_TOKEN = "xoxb-123456789012-1234567890123-AbCdEfGhIjKlMnOpQrStUvWx";
+export const SLACK_USER_TOKEN = "xoxp-123456789012-1234567890123-1234567890123-a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6";

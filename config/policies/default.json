@@ -1,0 +1,19 @@
+{
+  "min_confidence": 0.7,
+  "max_file_size": 1000000,
+  "include_patterns": [],
+  "exclude_patterns": [],
+  "severity_map": {
+    "AUTH_CREDENTIAL": "critical",
+    "UNCERTAIN": "medium"
+  },
+  "ignore_provenance": [
+    "DOC_EXAMPLE",
+    "BUILD_GENERATED",
+    "DERIVED_VALUE"
+  ],
+  "require_verification": false,
+  "block_on_findings": false,
+  "allow_list": [],
+  "custom_prefixes": {}
+}
